@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
-function EditTask() {
+function DeleteTask() {
 	const { id } = useParams();
 	const inputDom = useRef(null);
 	const checkBoxDom = useRef(null);
 
 	const [task, setTask] = useState([]);
-	console.log(task)
+	console.log(task);
 	useEffect(() => {
 		fetchTask();
 	}, []);
@@ -16,12 +16,12 @@ function EditTask() {
 	async function fetchTask() {
 		try {
 			const { data } = await axios(`http://localhost:5000/task/${id}`);
-			const toBeEdited=data.result
+			const toBeDeleted = data.result;
 			setTask(data.result);
-			console.log(toBeEdited);
+			console.log(toBeDeleted);
 			if (data.result.length > 0) {
-				inputDom.current.value = toBeEdited[0].task_name;
-				checkBoxDom.current.checked = toBeEdited[0].completed;
+				inputDom.current.value = toBeDeleted[0].task_name;
+				checkBoxDom.current.checked = toBeDeleted[0].completed;
 			}
 		} catch (error) {
 			console.log(error.message);
@@ -29,8 +29,8 @@ function EditTask() {
 	}
 
 	// edit functionality
-//------------------------------------------
-	
+	//------------------------------------------
+
 	async function handleFormSubmit(e) {
 		e.preventDefault();
 		const updatedName = inputDom.current.value;
@@ -54,7 +54,7 @@ function EditTask() {
 		<>
 			<div className="container">
 				<form className="single-task-form" onSubmit={handleFormSubmit}>
-					<h4 >Edit Task</h4>
+					<h4>Edit Task</h4>
 					<div className="form-control">
 						<label>Task ID</label>
 						<p className="task-edit-id">{id}</p>
@@ -90,6 +90,4 @@ function EditTask() {
 	);
 }
 
-
-export default EditTask;
-
+export default DeleteTask;
