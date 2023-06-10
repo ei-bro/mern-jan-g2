@@ -45,8 +45,10 @@ function Task() {
 		try {
 			setloading(true);
 			// please call delete api request here
-			fetchTask();
+			await axios.delete(`http://localhost:5000/task/${id}`)
+			fetchTask();// why this function called here
 			setloading(false);
+			console.log(`Task id ${id} deleted`)
 		} catch (error) {
 			setloading(false);
 		}
